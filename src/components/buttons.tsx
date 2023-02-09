@@ -1,20 +1,26 @@
 import { FontAwesomeIcon, FontAwesomeIconProps } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
-import React from 'react';
+import React, { MouseEventHandler } from 'react';
 
 interface ButtonProps {
   label: string;
+  onClick?: MouseEventHandler | undefined;
+  type?: 'submit' | 'reset' | 'button';
 }
 
 interface LinkButtonProps extends ButtonProps {
   href: string;
 }
 
-export function Button({ label }: ButtonProps) {
+export function Button({ label, onClick, type = 'button' }: ButtonProps) {
   return (
-    <div className='rounded-xl bg-primary text-white hover:cursor-pointer hover:bg-cyan-700'>
+    <button
+      onClick={onClick}
+      type={type}
+      className='w-fit rounded-full bg-primary p-3 text-white hover:cursor-pointer hover:bg-cyan-700'
+    >
       {label}
-    </div>
+    </button>
   );
 }
 

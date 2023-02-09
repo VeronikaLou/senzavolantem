@@ -1,4 +1,4 @@
-import directus from '../../lib/directus';
+import { reservations } from '../../lib/directus';
 import { Reservation as ReservationType } from '../../models/reservation';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import React from 'react';
@@ -7,17 +7,24 @@ import { Layout } from 'src/components/layout';
 export default function Reservation({ reservation }: { reservation: ReservationType }) {
   return (
     <Layout>
-      <h1 className='mb-5 text-xl'>{`Rezervace - ${reservation.id}`}</h1>
-      <h2>{`Jméno: ${reservation.firstName} ${reservation.lastName}`}</h2>
-      <h2>{`E-mail: ${reservation.mail}`}</h2>
-      <h2>{`Datum vyjížďky: ${reservation.from} - ${reservation.to}`}</h2>
-      <h2>{`Datum rezervace: ${reservation.created}`}</h2>
+      <div className='flex flex-col'>
+        <h1 className='mb-5 text-xl'>{`Rezervace - ${reservation.id}`}</h1>
+        <label>{`Jméno: ${reservation.firstName}`}</label>
+        <label>{`Příjmení: ${reservation.lastName}`}</label>
+        <label>{`Datum narození: ${reservation.birthDate}`}</label>
+        <label>{`Adresa: ${reservation.address}`}</label>
+        <label>{`E-mail: ${reservation.mail}`}</label>
+        <label>{`Telefon: ${reservation.phone}`}</label>
+        <label>{`Datum vyjížďky: ${reservation.from} - ${reservation.to}`}</label>
+        <label>{`Datum rezervace: ${reservation.created}`}</label>
+        <label>{`Status: ${reservation.status}`}</label>
+      </div>
     </Layout>
   );
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const res = await directus.items('reservations').readByQuery({
+  const res = await reservations.readByQuery({
     filter: { id: params?.id },
   });
 
@@ -29,7 +36,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const res = await directus.items('reservations').readByQuery({
+  const res = await reservations.readByQuery({
     limit: -1,
   });
 
@@ -37,7 +44,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     paths:
       res?.data?.map((reservation) => ({
         params: {
-          id: (reservation as ReservationType).id,
+          id: reservation.id,
         },
       })) ?? [],
     fallback: false,
