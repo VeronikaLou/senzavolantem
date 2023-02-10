@@ -1,4 +1,4 @@
-import React, { HTMLInputTypeAttribute } from 'react';
+import React, { HTMLInputTypeAttribute, PropsWithChildren } from 'react';
 
 interface FormFieldProps {
   label: string;
@@ -28,4 +28,13 @@ export const FormTextField = (props: Omit<FormFieldProps, 'type'>) => (
 
 export const FormDateField = (props: Omit<FormFieldProps, 'type'>) => (
   <FormField {...props} type='date' />
+);
+
+export const FormCustomField = ({ value, label }: { label: string; value: string }) => (
+  <div className='flex w-full flex-col'>
+    <label className='w-[200px]'>{label}</label>
+    <label className=' flex h-10 w-full items-center border border-primary pl-3 pr-3 focus-visible:border-2 focus-visible:outline-none'>
+      {value}
+    </label>
+  </div>
 );

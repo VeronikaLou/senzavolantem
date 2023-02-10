@@ -1,12 +1,21 @@
+import { Button } from '../../components/buttons';
+import { Calendar } from '../../components/calendar';
+import { FormCustomField, FormDateField, FormTextField } from '../../components/form-fields';
+import { Layout } from '../../components/layout';
 import { reservations } from '../../lib/directus';
+import { formatDate } from '../../utils/date';
 import { useRouter } from 'next/navigation';
-import React, { FormEvent } from 'react';
-import { Button } from 'src/components/buttons';
-import { FormDateField, FormTextField } from 'src/components/form-fields';
-import { Layout } from 'src/components/layout';
+import React, { FormEvent, useState } from 'react';
+import { Range } from 'react-date-range';
+import 'react-date-range/dist/styles.css';
+import 'react-date-range/dist/theme/default.css';
+
+// import { useCalendar } from 'src/components/calendar';
 
 export default function Form() {
   const router = useRouter();
+
+  const [dateRange, setDateRange] = useState<Range | undefined>(undefined);
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -16,9 +25,9 @@ export default function Form() {
       lastName: event.target.lastName.value,
       mail: event.target.mail.value,
       phone: event.target.phone.value,
-      from: event.target.from.value,
+      from: dateRange?.startDate,
       birthDate: event.target.birthDate.value,
-      to: event.target.to.value,
+      to: dateRange?.endDate,
       status: 'created',
       address: event.target.address.value,
     });
@@ -38,8 +47,15 @@ export default function Form() {
           <FormTextField label='Adresa' name='address' />
           <FormTextField label='E-mail' name='mail' />
           <FormTextField label='Telefon' name='phone' />
-          <FormDateField label='Od' name='from' />
-          <FormDateField label='Do' name='to' />
+          <FormCustomField
+            label='Termín'
+            value={
+              dateRange
+                ? `${formatDate(dateRange.startDate)} - ${formatDate(dateRange.endDate)}`
+                : ''
+            }
+          />
+          <Calendar handleChange={setDateRange} />
           <Button label='Rezervovat' type='submit' />
         </form>
       </div>

@@ -1,8 +1,9 @@
+import { Layout } from '../../components/layout';
 import { reservations } from '../../lib/directus';
 import { Reservation as ReservationType } from '../../models/reservation';
+import { formatDate } from '../../utils/date';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import React from 'react';
-import { Layout } from 'src/components/layout';
 
 export default function Reservation({ reservation }: { reservation: ReservationType }) {
   return (
@@ -15,7 +16,9 @@ export default function Reservation({ reservation }: { reservation: ReservationT
         <label>{`Adresa: ${reservation.address}`}</label>
         <label>{`E-mail: ${reservation.mail}`}</label>
         <label>{`Telefon: ${reservation.phone}`}</label>
-        <label>{`Datum vyjížďky: ${reservation.from} - ${reservation.to}`}</label>
+        <label>{`Datum vyjížďky: ${formatDate(reservation.from)} - ${formatDate(
+          reservation.to,
+        )}`}</label>
         <label>{`Datum rezervace: ${reservation.created}`}</label>
         <label>{`Status: ${reservation.status}`}</label>
       </div>

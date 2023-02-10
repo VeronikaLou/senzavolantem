@@ -6,8 +6,8 @@ export interface Reservation {
   mail: string;
   phone: string;
   address: string;
-  from: string;
-  to: string;
+  from: Date;
+  to: Date;
   created: string;
   status: 'created' | 'deposit_paid' | 'fully_paid' | 'used';
 }
