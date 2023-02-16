@@ -1,5 +1,6 @@
 import { LinkButton } from './buttons';
 import { MenuItem } from './menu-item';
+import Link from 'next/link';
 import React from 'react';
 
 export function Menubar() {
@@ -20,7 +21,7 @@ export function Menubar() {
 
   return (
     <div className='mb-5 flex w-full items-center justify-between gap-5 text-xl font-bold uppercase text-primary'>
-      <div>Sen za volantem</div>
+      <Link href='/'>Sen za volantem</Link>
       <div className='flex items-center gap-5'>
         {menuItems.map((item) => (
           <MenuItem key={item.label} {...item} />

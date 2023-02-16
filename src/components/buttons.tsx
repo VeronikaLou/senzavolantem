@@ -17,7 +17,7 @@ export function Button({ label, onClick, type = 'button' }: ButtonProps) {
     <button
       onClick={onClick}
       type={type}
-      className='w-fit rounded-full bg-primary p-3 text-white hover:cursor-pointer hover:bg-cyan-700'
+      className='w-fit rounded-full bg-primary p-3 uppercase text-white hover:cursor-pointer hover:bg-cyan-700'
     >
       {label}
     </button>
