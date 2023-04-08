@@ -18,7 +18,7 @@ module.exports = {
     },
     extend: {
       colors: {
-        primary: colors.cyan[600],
+        primary: colors.sky[800],
         'primary-hover': colors.slate[500],
         secondary: colors.gray[200],
       },

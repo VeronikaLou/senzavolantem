@@ -1,3 +1,66 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.rdrCalendarWrapper {
+  width: 100%;
+}
+
+.rdrMonth {
+  width: 100% !important;
+}
+
+.rdrMonths {
+  width: 100%;
+}
+
+.rdrCalendarWrapper {
+  width: 100%;
+}
+
+.rdrDay {
+  height: 3rem !important;
+}
+
+.rdrDateInput {
+  border: 1px solid #075985 !important;
+  box-shadow: none;
+  height: 3rem;
+  border-radius: 0.75rem !important;
+
+}
+
+.rdrDateDisplayItemActive {
+  border: 2px solid #075985 !important;
+}
+
+.rdrDateInput input {
+  height: 100% !important;
+}
+
+.rdrDateDisplayWrapper {
+  background-color: inherit !important;
+}
+
+.rdrDateDisplay {
+  margin: 0 !important;
+}
+
+.rdrMonthName {
+  margin-top: -55px;
+  text-align: center !important;
+  margin-bottom: 30px !important;
+  text-transform: uppercase !important;
+  color: #075985 !important;
+  font-size: 1rem;
+}
+
+.rdrMonthAndYearPickers {
+  visibility: hidden;
+}
+
+.rdrDayNumber {
+  font-weight: 400 !important;
+  font-size: 0.9rem !important;
+}

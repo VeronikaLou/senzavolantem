@@ -1,13 +1,12 @@
 import { Button } from '../../components/buttons';
 import { Calendar } from '../../components/calendar';
-import { FormCustomField, FormDateField, FormTextField } from '../../components/form-fields';
+import { FormDateField, FormTextField } from '../../components/form-fields';
 import { reservations } from '../../lib/directus';
-import { formatDate } from '../../utils/date';
 import { useRouter } from 'next/navigation';
-import React, { FormEvent, useState } from 'react';
+import React from 'react';
+import { FormEvent, useState } from 'react';
 import { Range } from 'react-date-range';
-import 'react-date-range/dist/styles.css';
-import 'react-date-range/dist/theme/default.css';
+import { H1, H2 } from 'src/components/typography';
 
 // import { useCalendar } from 'src/components/calendar';
 
@@ -46,23 +45,21 @@ export default function Form() {
   };
 
   return (
-    <div className='mb-20 flex flex-col items-center'>
-      <form onSubmit={handleSubmit} className='flex w-[600px] flex-col items-center gap-3'>
-        <FormTextField label='Jméno' name='firstName' />
-        <FormTextField label='Příjmení' name='lastName' />
-        <FormDateField label='Datum narození' name='birthDate' />
-        <FormTextField label='Adresa' name='address' />
-        <FormTextField label='E-mail' name='mail' />
-        <FormTextField label='Telefon' name='phone' />
-        <FormCustomField
-          label='Termín'
-          value={
-            dateRange ? `${formatDate(dateRange.startDate)} - ${formatDate(dateRange.endDate)}` : ''
-          }
-        />
-        <Calendar handleChange={setDateRange} />
-        <Button label='Rezervovat' type='submit' />
-      </form>
-    </div>
+    <form onSubmit={handleSubmit} className='gap- mb-20 flex w-full flex-col items-center gap-8'>
+      <H1>Rezervace</H1>
+      <div className='items flex w-[70%] flex-col'>
+        <H2>Osobní údaje</H2>
+        <div className='grid grid-cols-2 gap-4'>
+          <FormTextField label='Jméno' name='firstName' />
+          <FormTextField label='Příjmení' name='lastName' />
+          <FormDateField label='Datum narození' name='birthDate' />
+          <FormTextField label='Adresa' name='address' />
+          <FormTextField label='E-mail' name='mail' />
+          <FormTextField label='Telefon' name='phone' />
+        </div>
+      </div>
+      <Calendar handleChange={setDateRange} />
+      <Button label='Rezervovat' type='submit' />
+    </form>
   );
 }

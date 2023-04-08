@@ -1,9 +1,12 @@
-import { addDays } from 'date-fns';
+/* eslint-disable prettier/prettier */
+import { H2 } from './typography';
 import { cs } from 'date-fns/locale';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { DateRange, Range } from 'react-date-range';
-import { reservations } from 'src/lib/directus';
-import { getFirstDayOfMonthDate, getLastDayOfMonthDate } from 'src/utils/date';
+import colors from 'tailwindcss/colors';
+import 'react-date-range/dist/styles.css';
+import 'react-date-range/dist/theme/default.css';
+import './calendar.module.css';
 
 interface CalendarProps {
   handleChange: (range: Range) => void;
@@ -19,48 +22,58 @@ export const Calendar = ({ handleChange }: CalendarProps) => {
     },
   ]);
 
-  const loadAvailability = async (date: Date) => {
-    const today = new Date();
-    const from = getFirstDayOfMonthDate(date);
-    const to = getLastDayOfMonthDate(date);
+  // const loadAvailability = async (date: Date) => {
+  //   const today = new Date();
+  //   const from = getFirstDayOfMonthDate(date);
+  //   const to = getLastDayOfMonthDate(date);
 
-    const res = await reservations.readByQuery({
-      filter: {
-        from: {
-          _between: [new Date(today) > new Date(from) ? today : from, to],
-        },
-      },
-    });
+  //   const res = await reservations.readByQuery({
+  //     filter: {
+  //       from: {
+  //         _between: [new Date(today) > new Date(from) ? today : from, to],
+  //       },
+  //     },
+  //   });
 
-    const dates: Date[] = [];
-    res?.data?.forEach(({ from, to }) => {
-      let currentDate: Date = new Date(from);
-      while (currentDate <= new Date(to)) {
-        dates.push(new Date(currentDate));
-        currentDate = addDays(currentDate, 1);
-      }
-    });
+  //   const dates: Date[] = [];
+  //   res?.data?.forEach(({ from, to }) => {
+  //     let currentDate: Date = new Date(from);
+  //     while (currentDate <= new Date(to)) {
+  //       dates.push(new Date(currentDate));
+  //       currentDate = addDays(currentDate, 1);
+  //     }
+  //   });
 
-    setReservedDates(dates);
-  };
+  //   setReservedDates(dates);
+  // };
 
-  useEffect(() => {
-    loadAvailability(new Date());
-  }, []);
+  // useEffect(() => {
+  //   loadAvailability(new Date());
+  // }, []);
 
   return (
-    <DateRange
-      locale={cs}
-      ranges={dateRange}
-      minDate={new Date()}
-      disabledDates={reservedDates}
-      onShownDateChange={async (props) => {
-        loadAvailability(props);
-      }}
-      onChange={(item) => {
-        handleChange(item.selection);
-        setDateRange([item.selection]);
-      }}
-    />
+    <div className='w-[70%]'>
+      <H2>Termín</H2>
+      <DateRange
+        locale={cs}
+        ranges={dateRange}
+        minDate={new Date()}
+        months={2}
+        // className='w-full'
+        disabledDates={reservedDates}
+        // onShownDateChange={async (props) => {
+        //   loadAvailability(props);
+        // }}
+        direction='horizontal'
+        onChange={(item) => {
+          handleChange(item.selection);
+          setDateRange([item.selection]);
+        }}
+        startDatePlaceholder='Půjčení'
+        endDatePlaceholder='Vrácení'
+        showMonthAndYearPickers={false}
+        rangeColors={[colors.sky[800]]}
+      />
+    </div>
   );
 };
